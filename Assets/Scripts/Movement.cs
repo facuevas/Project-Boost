@@ -6,8 +6,9 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     // Components
-    private Rigidbody rb;
-    private Transform t;
+    private Rigidbody m_RigidBody;
+    private Transform m_Transform;
+    private AudioSource m_AudioSource;
 
     // Class Properties
     [SerializeField]
@@ -17,8 +18,9 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        t = GetComponent<Transform>();
+        m_RigidBody = GetComponent<Rigidbody>();
+        m_Transform = GetComponent<Transform>();
+        m_AudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -36,7 +38,13 @@ public class Movement : MonoBehaviour
     private void ProcessThrustInput()
     {
         if (Input.GetKey(KeyCode.Space))
-            rb.AddRelativeForce(Vector3.up * thrustSpeed * Time.deltaTime);
+        {
+            m_RigidBody.AddRelativeForce(Vector3.up * thrustSpeed * Time.deltaTime);
+            if (!m_AudioSource.isPlaying)
+                m_AudioSource.Play();
+            return;
+        }
+        m_AudioSource.Stop();
     }
 
     private void ProcessRotationInput()
@@ -54,9 +62,9 @@ public class Movement : MonoBehaviour
         // How much rotation to apply to turn our rocket
         Vector3 rotationToApply = Vector3.forward * rotationSpeed * Time.deltaTime;
 
-        rb.freezeRotation = true; // Freeze the rotation so we can manually rotate.
-        t.Rotate(direction * rotationToApply); // Apply the rotation.
-        rb.constraints =
+        m_RigidBody.freezeRotation = true; // Freeze the rotation so we can manually rotate.
+        m_Transform.Rotate(direction * rotationToApply); // Apply the rotation.
+        m_RigidBody.constraints =
             RigidbodyConstraints.FreezeRotationX | // freezing rotation on the X
             RigidbodyConstraints.FreezeRotationY | // freezing rotation on the Y
             RigidbodyConstraints.FreezePositionZ; // freezing position on the Z
