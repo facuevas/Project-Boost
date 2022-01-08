@@ -22,6 +22,9 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        // If we are transitioning, ignore all collisions.
+        if (isTransitioning) return;
+
         var otherTag = other.gameObject.tag;
         switch (otherTag)
         {
@@ -41,13 +44,11 @@ public class CollisionHandler : MonoBehaviour
     // The parameter takes a boolean if the player succeeds or fails.
     private void StartTransition(bool success)
     {
-        if (!isTransitioning)
-        {
-            m_AudioSource.Stop();
-            m_AudioSource.PlayOneShot(success ? m_Success : m_Failure);
-            isTransitioning = true;
-            GetComponent<Movement>().enabled = false;
-        }
+
+        isTransitioning = true;
+        m_AudioSource.Stop();
+        m_AudioSource.PlayOneShot(success ? m_Success : m_Failure);
+        GetComponent<Movement>().enabled = false;
     }
 
     // This method is called when the Player crashes. It restarts the level.
