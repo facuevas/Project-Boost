@@ -7,9 +7,13 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField]
     private float m_LoadLevelDelay = 1.5f;
     [SerializeField]
-    private AudioClip m_Success;
+    private AudioClip m_SuccessAudio;
     [SerializeField]
-    private AudioClip m_Failure;
+    private AudioClip m_FailureAudio;
+    [SerializeField]
+    private ParticleSystem m_SuccessParticle;
+    [SerializeField]
+    private ParticleSystem m_FailureParticle;
 
     // Components
     private AudioSource m_AudioSource;
@@ -47,15 +51,15 @@ public class CollisionHandler : MonoBehaviour
 
         isTransitioning = true;
         m_AudioSource.Stop();
-        m_AudioSource.PlayOneShot(success ? m_Success : m_Failure);
+        m_AudioSource.PlayOneShot(success ? m_SuccessAudio : m_FailureAudio);
+
         GetComponent<Movement>().enabled = false;
     }
 
     // This method is called when the Player crashes. It restarts the level.
     private void StartCrashSequence()
     {
-        //TODO: Add SFX upon crash.
-        //TODO: Add particle effect upon crash.
+        m_FailureParticle.Play();
         StartTransition(false);
         Invoke("ReloadLevel", m_LoadLevelDelay);
     }
@@ -69,8 +73,7 @@ public class CollisionHandler : MonoBehaviour
     // This method is called when the Player succeeds.
     private void LoadNextLevelSequence()
     {
-        //TODO: Add SFX upon crash.
-        //TODO: Add particle effect upon crash.
+        m_SuccessParticle.Play();
         StartTransition(true);
         Invoke("LoadNextLevel", m_LoadLevelDelay);
     }
