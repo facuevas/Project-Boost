@@ -5,16 +5,19 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    // Class Properties
+    [SerializeField]
+    private float m_ThrustSpeed = 1250f;
+    [SerializeField]
+    private float m_RotationSpeed = 1f;
+    [SerializeField]
+    private AudioClip m_MainEngine;
+
     // Components
     private Rigidbody m_RigidBody;
     private Transform m_Transform;
     private AudioSource m_AudioSource;
 
-    // Class Properties
-    [SerializeField]
-    private float thrustSpeed = 1250f;
-    [SerializeField]
-    private float rotationSpeed = 1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,9 +42,9 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            m_RigidBody.AddRelativeForce(Vector3.up * thrustSpeed * Time.deltaTime);
+            m_RigidBody.AddRelativeForce(Vector3.up * m_ThrustSpeed * Time.deltaTime);
             if (!m_AudioSource.isPlaying)
-                m_AudioSource.Play();
+                m_AudioSource.PlayOneShot(m_MainEngine);
             return;
         }
         m_AudioSource.Stop();
@@ -60,7 +63,7 @@ public class Movement : MonoBehaviour
     private void ApplyRotation(float direction)
     {
         // How much rotation to apply to turn our rocket
-        Vector3 rotationToApply = Vector3.forward * rotationSpeed * Time.deltaTime;
+        Vector3 rotationToApply = Vector3.forward * m_RotationSpeed * Time.deltaTime;
 
         m_RigidBody.freezeRotation = true; // Freeze the rotation so we can manually rotate.
         m_Transform.Rotate(direction * rotationToApply); // Apply the rotation.
