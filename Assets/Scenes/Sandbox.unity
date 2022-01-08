@@ -519,6 +519,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1271551906, guid: 4e5d1ccd39a34466d9fa96f744ac009f, type: 3}
+      propertyPath: m_CheatsEnabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4457417092464539826, guid: 4e5d1ccd39a34466d9fa96f744ac009f, type: 3}
       propertyPath: m_RootOrder
       value: 3

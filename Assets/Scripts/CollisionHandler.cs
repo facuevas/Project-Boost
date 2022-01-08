@@ -17,17 +17,19 @@ public class CollisionHandler : MonoBehaviour
 
     // Components
     private AudioSource m_AudioSource;
-    bool isTransitioning = false;
+    private DebugCheats m_DebugCheats;
+    bool m_IsTransitioning = false;
 
     private void Start()
     {
         m_AudioSource = GetComponent<AudioSource>();
+        m_DebugCheats = GetComponent<DebugCheats>();
     }
 
     private void OnCollisionEnter(Collision other)
     {
         // If we are transitioning, ignore all collisions.
-        if (isTransitioning) return;
+        if (m_IsTransitioning || (m_DebugCheats.m_CheatsEnabled && !m_DebugCheats.m_IsCollisionOn)) return;
 
         var otherTag = other.gameObject.tag;
         switch (otherTag)
@@ -49,7 +51,7 @@ public class CollisionHandler : MonoBehaviour
     private void StartTransition(bool success)
     {
 
-        isTransitioning = true;
+        m_IsTransitioning = true;
         m_AudioSource.Stop();
         m_AudioSource.PlayOneShot(success ? m_SuccessAudio : m_FailureAudio);
 
@@ -71,7 +73,7 @@ public class CollisionHandler : MonoBehaviour
     }
 
     // This method is called when the Player succeeds.
-    private void LoadNextLevelSequence()
+    public void LoadNextLevelSequence()
     {
         m_SuccessParticle.Play();
         StartTransition(true);
