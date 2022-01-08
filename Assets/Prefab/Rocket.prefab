@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c37dfcbb112db142b28ff4eef2367da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CheatsEnabled: 1
+  m_CheatsEnabled: 0
   m_IsCollisionOn: 0
 --- !u!1001 &521981106283171069
 PrefabInstance:

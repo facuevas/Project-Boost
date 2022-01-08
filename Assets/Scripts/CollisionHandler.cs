@@ -18,12 +18,23 @@ public class CollisionHandler : MonoBehaviour
     // Components
     private AudioSource m_AudioSource;
     private DebugCheats m_DebugCheats;
+    private Transform m_Transform;
     bool m_IsTransitioning = false;
 
     private void Start()
     {
         m_AudioSource = GetComponent<AudioSource>();
         m_DebugCheats = GetComponent<DebugCheats>();
+        m_Transform = GetComponent<Transform>();
+    }
+
+    private void Update()
+    {
+        if (m_Transform.position.y < 0 && !m_IsTransitioning)
+        {
+            // They died, fell off the platform.
+            StartCrashSequence();
+        }
     }
 
     private void OnCollisionEnter(Collision other)
@@ -50,7 +61,6 @@ public class CollisionHandler : MonoBehaviour
     // The parameter takes a boolean if the player succeeds or fails.
     private void StartTransition(bool success)
     {
-
         m_IsTransitioning = true;
         m_AudioSource.Stop();
         m_AudioSource.PlayOneShot(success ? m_SuccessAudio : m_FailureAudio);
