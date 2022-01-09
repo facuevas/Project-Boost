@@ -6,9 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Mind The Gap.unity
+    guid: acdb821c2b628408b8a7b3339f06b672
+  - enabled: 1
+    path: Assets/Scenes/Moving Platform.unity
+    guid: 84d4bbf5c41964379bdb64bb887e9ae4
+  - enabled: 1
     path: Assets/Scenes/Sandbox.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/Large Box.unity
-    guid: df3cc00844c584a6cba6c7d7cdf2e6fa
+    path: Assets/Scenes/Gauntlet.unity
+    guid: df65485b63d84457584602f9bff8c94d
+  - enabled: 1
+    path: Assets/Scenes/Gaps.unity
+    guid: becf22ddc52d14abebe2eafed9a2671e
   m_configObjects: {}

@@ -46,7 +46,6 @@ public class CollisionHandler : MonoBehaviour
         switch (otherTag)
         {
             case "Friendly":
-                Debug.Log("Collided with a Friendly object");
                 break;
             case "Finished":
                 LoadNextLevelSequence();
